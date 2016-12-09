@@ -1,4 +1,6 @@
-# vscode-gitlink
+# GitLink
+
+[![Current Version](http://vsmarketplacebadge.apphb.com/version/qezhu.gitlink.svg)](http://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
 
 Inspired by GitHub extension for Visual Studio, this extension provide the feature that **Go To** current file's online link in browser and **Copy** the link in clipboard.
 
@@ -20,6 +22,6 @@ Press `F1`, type `ext install gitlink`
 
 ### 0.0.1
 
-Initial release of vscode-git-link
+Initial release of GitLink
 
 **Enjoy!**
