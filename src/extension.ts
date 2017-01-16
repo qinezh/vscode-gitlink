@@ -50,7 +50,7 @@ class GitConfigParse {
     private _configPath : string;
     private _headPath : string;
 
-    private _configRegex = /^\[remote \"origin\"\]\n\s+url\s=\s(https:\/\/|git@)([^/:]+)(\/|:)([^/:]+)(\/|:)([^/:.]+)(\.git)?$/m;
+    private _configRegex = /^\[remote \"origin\"\]\n\s+url\s=\s(https:\/\/|git@)([^\/:]+)(\/|:)([^\/:]+)(\/|:)([^\/:]+)(\.git)?$/m;
     private _headRegex = /ref:\s+refs\/heads\/(\S+)/m;
 
     public getOnlineLink(filePath: string, index = -1): string {
@@ -99,7 +99,7 @@ class GitConfigParse {
     private getLinkInfo(configContent: string): LinkInfo {
         let info = new LinkInfo();
         let matches = this._configRegex.exec(configContent);
-        if (matches.length > 6) {
+        if (matches !== null && matches.length > 6) {
             info.siteName = matches[2];
             info.userName = matches[4];
             info.repoName = matches[6];
