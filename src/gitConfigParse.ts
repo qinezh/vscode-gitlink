@@ -11,7 +11,7 @@ export class GitConfigParse {
     private _configPath: string;
     private _headPath: string;
 
-    private _configRegex = /^\[remote \"origin\"\]\n\s+url\s=\s(https:\/\/|git@)([^\/:]+)(\/|:)([^\/:]+)(\/|:)([^\/:]+)(\.git)?$/m;
+    private _configRegex = /^\[remote \"origin\"\]\n\s+url\s=\s(https:\/\/|git@)([^\/:]+)(\/|:)([^\/:]+)(\/|:)([^\/:]+?)(\.git)?$/m;
     private _headRegex = /ref:\s+refs\/heads\/(\S+)/m;
 
     public getOnlineLink(filePath: string, position: vscode.Selection): string {

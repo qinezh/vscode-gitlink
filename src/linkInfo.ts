@@ -18,6 +18,6 @@ export class LinkInfo {
             return `${prefix}#L${startIndex}`;
         }
 
-        return `${prefix}#L${startIndex}-#L${endIndex}`;
+        return `${prefix}#L${startIndex}-L${endIndex}`;
     }
 }
