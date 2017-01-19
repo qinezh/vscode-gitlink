@@ -20,8 +20,12 @@ Press `F1`, type `ext install gitlink`
 
 ## Release Notes
 
+### 0.1.1
+
+* Support multiple lines section
+
 ### 0.0.1
 
-Initial release of GitLink
+* Initial release of GitLink
 
 **Enjoy!**
