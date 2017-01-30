@@ -13,7 +13,8 @@ export class LinkInfo {
     public toLink(): string {
         var startIndex = this.position.start.line + 1;
         var endIndex = this.position.end.line + 1;
-        var prefix = `https://${this.siteName}/${this.userName}/${this.repoName}/blob/${this.branchName}/${this.filePath}`;
+        var siteUrlSource = (this.siteName.split("@")[1] === "bitbucket.org") ? 'src' : 'blob';
+        var prefix = `https://${this.siteName}/${this.userName}/${this.repoName}/${siteUrlSource}/${this.branchName}/${this.filePath}`;
         if (startIndex === endIndex) {
             return `${prefix}#L${startIndex}`;
         }
