@@ -15,31 +15,34 @@ export class GitConfigParse {
     private _headRegex = /ref:\s+refs\/heads\/(\S+)/m;
 
     public getOnlineLink(filePath: string, position: vscode.Selection): string {
-        let gitHomeDir = this.findGitRootDir(filePath);
+        const gitHomeDir = this.findGitRootDir(filePath);
         if (!gitHomeDir) {
             throw new Error("Can't find git root folder of current file");
         }
 
+        filePath = path.relative(gitHomeDir, filePath);
+
         this._configPath = path.join(gitHomeDir, this.ConfigName);
         this._headPath = path.join(gitHomeDir, this.HeadName);
 
-        let configContent = fs.readFileSync(this._configPath, "utf8");
-        let linkInfo = this.getLinkInfo(configContent);
-        if (!linkInfo) {
-            throw new Error("Failed to parse git config file: " + this._configPath);
-        }
+        const configContent = fs.readFileSync(this._configPath, "utf8");
+        const headContent = fs.readFileSync(this._headPath, "utf8");
+        let info = this.getLinkInfo(configContent, headContent, filePath, position);
+        return info.toLink();
+    }
 
-        linkInfo.position = position;
-        linkInfo.filePath = path.relative(gitHomeDir, filePath);
-
-        let headContent = fs.readFileSync(this._headPath, "utf8");
-        var branchName = this.getBranchName(headContent);
+    public getLinkInfo(configContent: string, headContent: string, filePath: string, position?: vscode.Selection): LinkInfo {
+        const branchName = this.getBranchName(headContent);
         if (!branchName) {
             throw new Error("Failed to parse git HEAD file: " + this._headPath);
         }
 
-        linkInfo.branchName = branchName;
-        return linkInfo.toLink();
+        const matches = this._configRegex.exec(configContent);
+        if (!matches || matches.length < 8) {
+            throw new Error("Failed to parse git config file: " + this._configPath);
+        }
+
+        return new LinkInfo(matches[2], matches[4], matches[6], branchName, filePath, position);
     }
 
     private findGitRootDir(filePath: string): string {
@@ -53,18 +56,6 @@ export class GitConfigParse {
                 break;
             }
             currentFolder = currentFolder.substring(0, index);
-        }
-        return null;
-    }
-
-    private getLinkInfo(configContent: string): LinkInfo {
-        let info = new LinkInfo();
-        let matches = this._configRegex.exec(configContent);
-        if (matches !== null && matches.length > 6) {
-            info.siteName = matches[2];
-            info.userName = matches[4];
-            info.repoName = matches[6];
-            return info;
         }
         return null;
     }

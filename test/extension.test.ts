@@ -1,22 +1,86 @@
-//
-// Note: This example test is leveraging the Mocha test framework.
-// Please refer to their documentation on https://mochajs.org/ for help.
-//
-
-// The module 'assert' provides assertion methods from node
 import * as assert from 'assert';
 
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
-import * as vscode from 'vscode';
-import * as myExtension from '../src/extension';
+import { GitConfigParse } from '../src/gitConfigParse';
 
-// Defines a Mocha test suite to group tests of similar kind together
 suite("Extension Tests", () => {
+    const headConfig = `ref: refs/heads/master`;
+    test("Parse origin HTTPS url in github", () => {
+        const gitConfig = `[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = https://github.com/qinezh/vscode-gitlink.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master`;
+        let parser = new GitConfigParse();
+        let info = parser.getLinkInfo(gitConfig, headConfig, "index.md");
+        let url = info.toLink();
+        assert.equal("https://github.com/qinezh/vscode-gitlink/blob/master/index.md", url);
+    });
 
-    // Defines a Mocha unit test
-    test("Something 1", () => {
-        assert.equal(-1, [1, 2, 3].indexOf(5));
-        assert.equal(-1, [1, 2, 3].indexOf(0));
+    test("Parse origin HTTPS url with username in github", () => {
+        const gitConfig = `[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = https://qinezh@github.com/qinezh/vscode-gitlink.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master`;
+        let parser = new GitConfigParse();
+        let info = parser.getLinkInfo(gitConfig, headConfig, "index.md");
+        let url = info.toLink();
+        assert.equal("https://github.com/qinezh/vscode-gitlink/blob/master/index.md", url);
+    });
+
+    test("Parse origin SSH url in github", () => {
+        const gitConfig = `[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = git@github.com:qinezh/vscode-gitlink.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master`;
+        let parser = new GitConfigParse();
+        let info = parser.getLinkInfo(gitConfig, headConfig, "index.md");
+        let url = info.toLink();
+        assert.equal("https://github.com/qinezh/vscode-gitlink/blob/master/index.md", url);
+    });
+
+    test("Parse origin SSH url in bitbucket", () => {
+        const gitConfig = `[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = git@bitbucket.org:qinezh/vscode-gitlink.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master`;
+        let parser = new GitConfigParse();
+        let info = parser.getLinkInfo(gitConfig, headConfig, "index.md");
+        let url = info.toLink();
+        assert.equal("https://bitbucket.org/qinezh/vscode-gitlink/src/master/index.md", url);
     });
 });

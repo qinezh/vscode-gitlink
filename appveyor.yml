@@ -2,9 +2,12 @@ environment:
   TOKEN:
     secure: rY5dFN8j33FwsBgE6oq+X8T5XHbih1AkjfeN9byHjOAXHvW/TsX/Er3nD/A92RpLRpUYbVxyt5iAUdbkKQCKNg==
 
-before_build:
+install:
   - npm install
   - npm install -g vsce
+
+test_script:
+  - npm test --silent
 
 build_script:
   - echo publish package

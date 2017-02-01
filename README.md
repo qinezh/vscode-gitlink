@@ -20,6 +20,10 @@ Press `F1`, type `ext install gitlink`
 
 ## Release Notes
 
+### 0.2.0
+
+* Support Bitbucket
+
 ### 0.1.1
 
 * Support multiple lines section
