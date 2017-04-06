@@ -11,7 +11,7 @@ export class GitConfigParse {
     private _configPath: string;
     private _headPath: string;
 
-    private _configRegex = /^\[remote \"origin\"\]\n\s+url\s=\s(https:\/\/|git@)([^\/:]+)(\/|:)([^\/:]+)(\/|:)([^\/:]+?)(\.git)?$/m;
+    private _configRegex = /^\[remote \"origin\"\]\n\s+url\s=\s(https?:\/\/|git@)([^\/:]+)(\/|:)([^\/:]+)(\/|:)([^\/:]+?)(\.git)?$/m;
     private _headRegex = /ref:\s+refs\/heads\/(\S+)/m;
 
     public getOnlineLink(filePath: string, position: vscode.Selection): string {
@@ -40,6 +40,10 @@ export class GitConfigParse {
         const matches = this._configRegex.exec(configContent);
         if (!matches || matches.length < 8) {
             throw new Error("Failed to parse git config file: " + this._configPath);
+        }
+
+        if (matches[1] === "http://") {
+            return new LinkInfo(matches[2], matches[4], matches[6], branchName, filePath, position, true);
         }
 
         return new LinkInfo(matches[2], matches[4], matches[6], branchName, filePath, position);

@@ -9,14 +9,16 @@ export class LinkInfo {
     readonly branchName: string;
     readonly filePath: string;
     readonly position: Selection;
+    readonly isHttp: boolean;
 
-    constructor(siteName: string, userName: string, repoName: string, branchName: string, filePath: string, position: Selection) {
+    constructor(siteName: string, userName: string, repoName: string, branchName: string, filePath: string, position: Selection, isHttp = false) {
         this.siteName = siteName;
         this.userName = userName;
         this.repoName = repoName;
         this.branchName = branchName;
         this.filePath = filePath;
         this.position = position;
+        this.isHttp = isHttp;
     }
 
     public toLink(): string {
@@ -24,9 +26,15 @@ export class LinkInfo {
             throw new Error("site name in LinkInfo can't be null");
         }
 
-        let siteName = this.siteName.substr(this.siteName.lastIndexOf("@")+1) || this.siteName;
+        let siteName = this.siteName.substr(this.siteName.lastIndexOf("@") + 1) || this.siteName;
         let siteUrlSource = (siteName === "bitbucket.org") ? "src" : "blob";
-        let prefix = `https://${siteName}/${this.userName}/${this.repoName}/${siteUrlSource}/${this.branchName}/${this.filePath}`;
+
+        let prefix: string;
+        if (this.isHttp) {
+            prefix = `http://${siteName}/${this.userName}/${this.repoName}/${siteUrlSource}/${this.branchName}/${this.filePath}`;
+        } else {
+            prefix = `https://${siteName}/${this.userName}/${this.repoName}/${siteUrlSource}/${this.branchName}/${this.filePath}`;
+        }
 
         if (this.position) {
             let startIndex = this.position.start.line + 1;
