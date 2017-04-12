@@ -34,7 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
             return;
         }
         copyPaste.copy(onlineLink);
-        vscode.window.showInformationMessage("the Link is copyed");
+        vscode.window.showInformationMessage("The link has been copied to the clipboard.");
     });
 
     context.subscriptions.push(gotoDisposable, copyDisposable);
