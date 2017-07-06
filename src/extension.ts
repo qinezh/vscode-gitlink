@@ -42,8 +42,10 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 async function getOnlineLinkAsync(filePath: string, position: vscode.Selection): Promise<string> {
-    let startIndex = position.start.line + 1;
-    let endIndex = position.end.line + 1;
-
-    return GitUrl.getOnlineLinkAsync(filePath, startIndex, endIndex);
+    return GitUrl.getUrlsAsync(filePath, {
+        startLine: position.start.line + 1,
+        endLine: position.end.line + 1,
+        startColumn: position.start.character + 1,
+        endColumn: position.end.character + 1
+    });
 }
