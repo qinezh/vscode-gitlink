@@ -1,4 +1,4 @@
-# GitLink
+# GitLink (Support GitHub/GitLab/BitBucket/VSTS)
 
 [![Current Version](https://vsmarketplacebadge.apphb.com/version/qezhu.gitlink.svg)](https://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
 
@@ -8,8 +8,6 @@ Inspired by GitHub extension for Visual Studio, this extension provide the featu
 
 1. Go to the online link of current file.
 2. Copy the online link of current file.
-
-Note: Only support files in GitHub/GitLab at the moment.
 
 ## Install
 Press `F1`, type `ext install gitlink`
