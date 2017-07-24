@@ -18,6 +18,10 @@ Press `F1`, type `ext install gitlink`
 
 ## Release Notes
 
+### 0.2.3
+
+* Support GitLab url with company name
+
 ### 0.2.2
 
 * Support VSTS with [git-urls](https://github.com/qinezh/git-urls/)
