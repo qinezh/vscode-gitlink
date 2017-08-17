@@ -33,11 +33,11 @@
     "commands": [
       {
         "command": "extension.gotoOnlineLink",
-        "title": "Goto online link"
+        "title": "Goto Online Link"
       },
       {
         "command": "extension.copyOnlineLink",
-        "title": "Copy online link"
+        "title": "Copy Online Link"
       }
     ],
     "menus": {
@@ -67,6 +67,6 @@
   },
   "dependencies": {
     "copy-paste": "^1.3.0",
-    "git-urls": "^0.1.4"
+    "git-urls": "^0.2.0"
   }
 }

@@ -9,39 +9,62 @@ export function activate(context: vscode.ExtensionContext) {
     let window = vscode.window;
     let workspace = vscode.workspace;
 
-    let gotoDisposable = vscode.commands.registerCommand('extension.gotoOnlineLink', () => {
+    let gotoDisposable = vscode.commands.registerCommand('extension.gotoOnlineLink', async () => {
         let position = window.activeTextEditor.selection;
         let onlineLink;
         try {
-            getOnlineLinkAsync(window.activeTextEditor.document.fileName, position)
-                .then(onlineLink => {
-                    vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(onlineLink));
-                });
+            const linkMap = await getOnlineLinkAsync(window.activeTextEditor.document.fileName, position);
+            if (linkMap.size === 1) {
+                return vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(linkMap.values().next().value));
+            }
+
+            const itemPickList: vscode.QuickPickItem[] = [];
+            for (const [remoteName, url] of linkMap) {
+                itemPickList.push({ label: remoteName, description: "" });
+            }
+
+            let choice = await vscode.window.showQuickPick(itemPickList);
+            if (choice === undefined) {
+                return;
+            }
+
+            return vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(linkMap.get(choice.label)));
         } catch (ex) {
-            vscode.window.showWarningMessage(ex.message);
-            return;
+            return vscode.window.showWarningMessage(ex.message);
         }
     });
 
-    let copyDisposable = vscode.commands.registerCommand('extension.copyOnlineLink', () => {
+    let copyDisposable = vscode.commands.registerCommand('extension.copyOnlineLink', async () => {
         let position = window.activeTextEditor.selection;
         let onlineLink;
         try {
-            getOnlineLinkAsync(window.activeTextEditor.document.fileName, position)
-                .then(onlineLink => {
-                    copyPaste.copy(onlineLink);
-                    vscode.window.showInformationMessage("The link has been copied to the clipboard.");
-                });
+            const linkMap = await getOnlineLinkAsync(window.activeTextEditor.document.fileName, position)
+            if (linkMap.size === 1) {
+                copyPaste.copy(linkMap.values().next().value);
+                return vscode.window.showInformationMessage(`The link has been copied to the clipboard.`);
+            }
+
+            const itemPickList: vscode.QuickPickItem[] = [];
+            for (const [remoteName, url] of linkMap) {
+                itemPickList.push({ label: remoteName, description: "" });
+            }
+
+            let choice = await vscode.window.showQuickPick(itemPickList);
+            if (choice === undefined) {
+                return;
+            }
+
+            copyPaste.copy(linkMap.get(choice.label));
+            return vscode.window.showInformationMessage(`The link of ${choice.label} has been copied to the clipboard.`);
         } catch (ex) {
-            vscode.window.showWarningMessage(ex.message);
-            return;
+            return vscode.window.showWarningMessage(ex.message);
         }
     });
 
     context.subscriptions.push(gotoDisposable, copyDisposable);
 }
 
-async function getOnlineLinkAsync(filePath: string, position: vscode.Selection): Promise<string> {
+async function getOnlineLinkAsync(filePath: string, position: vscode.Selection): Promise<Map<string, string>> {
     return GitUrl.getUrlsAsync(filePath, {
         startLine: position.start.line + 1,
         endLine: position.end.line + 1,
