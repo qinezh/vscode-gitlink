@@ -2,7 +2,7 @@
   "name": "gitlink",
   "displayName": "gitlink",
   "description": "Goto/Copy current file's online link",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "publisher": "qezhu",
   "author": {
     "name": "Qinen Zhu",

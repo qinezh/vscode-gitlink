@@ -18,6 +18,10 @@ Press `F1`, type `ext install gitlink`
 
 ## Release Notes
 
+### 0.3.0
+
+* Support multiple remote sources (thanks the idea from [Junle Li](https://github.com/lijunle))
+
 ### 0.2.3
 
 * Support GitLab url with company name
