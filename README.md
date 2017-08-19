@@ -20,7 +20,7 @@ Press `F1`, type `ext install gitlink`
 
 ### 0.3.0
 
-* Support multiple remote sources (thanks the idea from [Junle Li](https://github.com/lijunle))
+* Support multiple remote sources (thanks [Junle Li](https://github.com/lijunle))
 
 ### 0.2.3
 
