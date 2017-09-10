@@ -18,6 +18,10 @@ Press `F1`, type `ext install gitlink`
 
 ## Release Notes
 
+### 0.3.2
+
+* Fix bugs that highlighting on BitBucket links doesn't work.
+
 ### 0.3.0
 
 * Support multiple remote sources (thanks [Junle Li](https://github.com/lijunle))

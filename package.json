@@ -2,7 +2,7 @@
   "name": "gitlink",
   "displayName": "gitlink",
   "description": "Goto/Copy current file's online link, supports multiple remote sources in GitHub/GitLab/BitBucket/VSTS",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "publisher": "qezhu",
   "author": {
     "name": "Qinen Zhu",
