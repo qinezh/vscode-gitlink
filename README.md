@@ -16,7 +16,17 @@ Press `F1`, type `ext install gitlink`
 
 ![How to use it](images/how_to_use_it.gif)
 
+### Set default remote source
+
+Workspace Level: add `gitlink.defaultRemote: "<your_default_remote_source>"` in `.vscode/settings.json` under the root of your workspace.
+
+Global Level: toggle the preference of vscode, and add `gitlink.defaultRemote: "<your_default_remote_source>"` in User Settings.
+
 ## Release Notes
+
+### 0.3.3
+
+* Support to set default remtoe source in workspace level and global level. (https://github.com/qinezh/vscode-gitlink/issues/11)
 
 ### 0.3.2
 
