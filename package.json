@@ -53,6 +53,15 @@
           "group": "navigation"
         }
       ]
+    },
+    "configuration": {
+      "properties": {
+        "gitlink.defaultRemote": {
+          "type": "string",
+          "default": "",
+          "description": "The default remote source name used by GitLink extension, while the repo contains multiple remote sources."
+        }
+      }
     }
   },
   "scripts": {

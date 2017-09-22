@@ -1,23 +1,32 @@
 'use strict';
 
 import * as vscode from "vscode";
-import GitUrl from "git-urls";
+import * as path from "path";
+import * as fs from "fs";
 
+import GitUrl from "git-urls";
 let copyPaste = require("copy-paste");
 
 export function activate(context: vscode.ExtensionContext) {
-    let gotoDisposable = vscode.commands.registerCommand('extension.gotoOnlineLink', gotoCommandAsync);
-    let copyDisposable = vscode.commands.registerCommand('extension.copyOnlineLink', copyCommandAsync);
+    let gitlinkConfig = vscode.workspace.getConfiguration("gitlink");
+
+    let gotoDisposable = vscode.commands.registerCommand('extension.gotoOnlineLink', async () => gotoCommandAsync(gitlinkConfig));
+    let copyDisposable = vscode.commands.registerCommand('extension.copyOnlineLink', async () => copyCommandAsync(gitlinkConfig));
 
     context.subscriptions.push(gotoDisposable, copyDisposable);
 }
 
-async function gotoCommandAsync() {
+async function gotoCommandAsync(gitlinkConfig: {}) {
     let position = vscode.window.activeTextEditor.selection;
     try {
         const linkMap = await getOnlineLinkAsync(vscode.window.activeTextEditor.document.fileName, position);
         if (linkMap.size === 1) {
             return vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(linkMap.values().next().value));
+        }
+
+        let defaultRemote = gitlinkConfig["defaultRemote"];
+        if (defaultRemote && linkMap.get(defaultRemote)) {
+            return vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(linkMap.get(defaultRemote)));
         }
 
         const itemPickList: vscode.QuickPickItem[] = [];
@@ -36,13 +45,18 @@ async function gotoCommandAsync() {
     }
 }
 
-async function copyCommandAsync() {
+async function copyCommandAsync(gitlinkConfig: {}) {
     let position = vscode.window.activeTextEditor.selection;
     try {
         const linkMap = await getOnlineLinkAsync(vscode.window.activeTextEditor.document.fileName, position)
         if (linkMap.size === 1) {
             copyPaste.copy(linkMap.values().next().value);
             return vscode.window.showInformationMessage(`The link has been copied to the clipboard.`);
+        }
+
+        let defaultRemote = gitlinkConfig["defaultRemote"];
+        if (defaultRemote && linkMap.get(defaultRemote)) {
+            return vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(linkMap.get(defaultRemote)));
         }
 
         const itemPickList: vscode.QuickPickItem[] = [];
