@@ -17,7 +17,7 @@ Press `F1`, type `ext install gitlink`
 
 ## Usage
 
-![How to use it](images/how_to_use_it.gif)
+<img src="images/how_to_use_it.gif" width="600"/>
 
 ### Set default remote source
 
