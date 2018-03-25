@@ -17,7 +17,7 @@ Press `F1`, type `ext install gitlink`
 
 ## Usage
 
-<img src="images/how_to_use_it.gif" width="600"/>
+<img src="https://github.com/qinezh/vscode-gitlink/raw/master/images/how_to_use_it.gif" width="600"/>
 
 ### Set default remote source
 
