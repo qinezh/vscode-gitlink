@@ -45,12 +45,12 @@
         {
           "when": "editorTextFocus",
           "command": "extension.gotoOnlineLink",
-          "group": "navigation"
+          "group": "GitLink@1"
         },
         {
           "when": "editorTextFocus",
           "command": "extension.copyOnlineLink",
-          "group": "navigation"
+          "group": "GitLink@2"
         }
       ]
     },
