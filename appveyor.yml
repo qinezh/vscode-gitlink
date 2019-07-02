@@ -1,6 +1,6 @@
 environment:
   TOKEN:
-    secure: AEieFFfW4iVmHm183DbTz0N+BuarsuEP0tajcoWIbM+YKIxDQmJ8F/6sofRkEczb0ezsnPHObahK7S88t3e0oA==
+    secure: 2WHUdcy8QsRWB6OTR7Hf0sWUzXxK9BFGbIvj8zzcsLFXHOra60PQqtik1P0cn1FMozvEFdjOGsjsO5xDedj2uw==
 
 install:
   - npm install
