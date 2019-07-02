@@ -6,6 +6,6 @@ src/**
 **/*.map
 .gitignore
 tsconfig.json
-images/
+images/how-to-use-it.gif
 appveyor.yml
 vsc-extension-quickstart.md
