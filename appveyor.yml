@@ -2,6 +2,8 @@ environment:
   TOKEN:
     secure: kqSyCPKqlgMYs49yzJvnK2+E8xltpUwkIupMVOArrrUNrW8S3DoOEtR4YMD4s+3gO+wlWLBUUi/ypIr56GjQaQ==
 
+skip_branch_with_pr: true
+
 install:
   - npm install
   - npm install -g vsce
