@@ -1,4 +1,4 @@
-# GitLink (Support GitHub/GitLab/BitBucket/VSTS)
+# GitLink (Support GitHub/GitLab/BitBucket/VSTS/DevOps)
 
 [![Current Version](https://vsmarketplacebadge.apphb.com/version/qezhu.gitlink.svg)](https://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/qezhu.gitlink.svg)](https://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
@@ -12,9 +12,6 @@ Inspired by GitHub extension for Visual Studio, this extension provide the featu
 1. Go to the online link of current file.
 2. Copy the online link of current file.
 
-## Install
-Press `F1`, type `ext install gitlink`
-
 ## Usage
 
 <img src="https://github.com/qinezh/vscode-gitlink/raw/master/images/how_to_use_it.gif" width="600"/>
@@ -26,6 +23,31 @@ Workspace Level: add `gitlink.defaultRemote: "<your_default_remote_source>"` in 
 Global Level: toggle the preference of vscode, and add `gitlink.defaultRemote: "<your_default_remote_source>"` in User Settings.
 
 ## Release Notes
+
+### 0.5.0
+
+* Add support for azure DevOps urls
+
+### 0.4.6
+
+* Move context menu into own group
+
+### 0.4.5
+
+* Fix token issue
+
+### 0.4.3
+
+* Reduce extension size
+* Fix branch encoding issue
+
+### 0.4.1
+
+* Update vsts support
+
+### 0.4.0
+
+* Refactor code
 
 ### 0.3.3
 
