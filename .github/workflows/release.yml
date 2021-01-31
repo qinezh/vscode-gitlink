@@ -1,0 +1,31 @@
+name: Publish NPM Package
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup node environment
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: ">=14"
+          registry-url: https://registry.npmjs.org/
+
+      - name: Checkout code 
+        uses: actions/checkout@v2
+      
+      - name: Install
+        run: |
+          npm i
+          npm install -g vsce
+
+      - name: Build
+        run: npm run build
+      
+      - name: Publish
+        run: vsce publish -p ${{secrets.TOKEN}}
+
