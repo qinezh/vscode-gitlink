@@ -1,11 +1,7 @@
 'use strict';
 
 import * as vscode from "vscode";
-import * as path from "path";
-import * as fs from "fs";
-
 import GitUrl from "git-urls";
-let copyPaste = require("copy-paste");
 
 export function activate(context: vscode.ExtensionContext) {
     let gitlinkConfig = vscode.workspace.getConfiguration("gitlink");
@@ -50,7 +46,7 @@ async function copyCommandAsync(gitlinkConfig: {}) {
     try {
         const linkMap = await getOnlineLinkAsync(vscode.window.activeTextEditor.document.fileName, position)
         if (linkMap.size === 1) {
-            copyPaste.copy(linkMap.values().next().value);
+            await vscode.env.clipboard.writeText(linkMap.values().next().value);
             return vscode.window.showInformationMessage(`The link has been copied to the clipboard.`);
         }
 
@@ -69,7 +65,7 @@ async function copyCommandAsync(gitlinkConfig: {}) {
             return;
         }
 
-        copyPaste.copy(linkMap.get(choice.label));
+        await vscode.env.clipboard.writeText(linkMap.get(choice.label));
         return vscode.window.showInformationMessage(`The link of ${choice.label} has been copied to the clipboard.`);
     } catch (ex) {
         return vscode.window.showWarningMessage(ex.message);
