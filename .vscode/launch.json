@@ -12,6 +12,7 @@
             "args": [
                 "--extensionDevelopmentPath=${workspaceRoot}"
             ],
+            "preLaunchTask": "npm: build",
             "stopOnEntry": false,
             "sourceMaps": true,
             "outFiles": [
