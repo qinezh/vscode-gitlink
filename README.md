@@ -24,6 +24,10 @@ Global Level: toggle the preference of vscode, and add `gitlink.defaultRemote: "
 
 ## Release Notes
 
+### 0.7.0
+
+* Replace npm package [copy-paste](https://www.npmjs.com/package/copy-paste) with VS Code ClipBoard API
+
 ### 0.5.0
 
 * Add support for azure DevOps urls
