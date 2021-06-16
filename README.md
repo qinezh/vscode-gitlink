@@ -14,7 +14,7 @@ Inspired by GitHub extension for Visual Studio, this extension provide the featu
 
 ## Usage
 
-<img src="https://github.com/qinezh/vscode-gitlink/raw/master/images/how_to_use_it.gif" width="600"/>
+<img src="https://github.com/qinezh/vscode-gitlink/raw/main/images/how_to_use_it.gif" width="600"/>
 
 ### Set default remote source
 
