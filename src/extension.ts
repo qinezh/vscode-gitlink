@@ -47,7 +47,7 @@ async function copyCommandAsync(gitlinkConfig: {}) {
         const linkMap = await getOnlineLinkAsync(vscode.window.activeTextEditor.document.fileName, position)
         if (linkMap.size === 1) {
             await vscode.env.clipboard.writeText(linkMap.values().next().value);
-            return vscode.window.showInformationMessage(`The link has been copied to the clipboard.`);
+            return vscode.window.setStatusBarMessage(`The link has been copied to the clipboard.`, 10000);
         }
 
         let defaultRemote = gitlinkConfig["defaultRemote"];
@@ -66,7 +66,7 @@ async function copyCommandAsync(gitlinkConfig: {}) {
         }
 
         await vscode.env.clipboard.writeText(linkMap.get(choice.label));
-        return vscode.window.showInformationMessage(`The link of ${choice.label} has been copied to the clipboard.`);
+        return vscode.window.setStatusBarMessage(`The link of ${choice.label} has been copied to the clipboard.`, 10000);
     } catch (ex) {
         return vscode.window.showWarningMessage(ex.message);
     }
