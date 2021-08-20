@@ -35,7 +35,7 @@ upstream        git@github.com:upstream/vscode-gitlink.git (fetch)
 upstream        git@github.com:upstream/vscode-gitlink.git (push)
 ```
 
-And the sample settings.json could be:
+And the sample `settings.json` could be like:
 ```json
 {
     "gitlink.defaultRemote": "upsteam"
