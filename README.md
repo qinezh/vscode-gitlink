@@ -18,9 +18,29 @@ Inspired by GitHub extension for Visual Studio, this extension provide the featu
 
 ### Set default remote source
 
-Workspace Level: add `gitlink.defaultRemote: "<your_default_remote_source>"` in `.vscode/settings.json` under the root of your workspace.
+When your project has multiple git remotes, you need to choose the git remote before the git link is generated. If you don't want to choose it every time, you could set the default remote source:
 
-Global Level: toggle the preference of vscode, and add `gitlink.defaultRemote: "<your_default_remote_source>"` in User Settings.
+**Workspace Level**: add `gitlink.defaultRemote: "<your_default_remote_source_name>"` in `.vscode/settings.json` under the root of your workspace.
+
+**Global Level**: toggle the preference of vscode, and add `gitlink.defaultRemote: "<your_default_remote_source_name>"` in User Settings.
+
+Please note, you could get the name of your remote sources by the command: `git remote -v`:
+
+```bash
+# example
+$ git remote -v
+origin  git@github.com:qinezh/vscode-gitlink (fetch)
+origin  git@github.com:qinezh/vscode-gitlink (push)
+upstream        git@github.com:upstream/vscode-gitlink.git (fetch)
+upstream        git@github.com:upstream/vscode-gitlink.git (push)
+```
+
+And the sample `settings.json` could be like:
+```json
+{
+    "gitlink.defaultRemote": "upsteam"
+}
+```
 
 ## Release Notes
 
