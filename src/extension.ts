@@ -4,69 +4,61 @@ import * as vscode from "vscode";
 import GitUrl from "git-urls";
 
 export function activate(context: vscode.ExtensionContext) {
-    let gitlinkConfig = vscode.workspace.getConfiguration("gitlink");
-
-    let gotoDisposable = vscode.commands.registerCommand('extension.gotoOnlineLink', async () => gotoCommandAsync(gitlinkConfig));
-    let copyDisposable = vscode.commands.registerCommand('extension.copyOnlineLink', async () => copyCommandAsync(gitlinkConfig));
+    const gotoDisposable = vscode.commands.registerCommand('extension.gotoOnlineLink', gotoCommandAsync);
+    const copyDisposable = vscode.commands.registerCommand('extension.copyOnlineLink', copyCommandAsync);
 
     context.subscriptions.push(gotoDisposable, copyDisposable);
 }
 
-async function gotoCommandAsync(gitlinkConfig: {}) {
-    let position = vscode.window.activeTextEditor.selection;
+async function getGitLink(): Promise<string | null> {
+    const position = vscode.window.activeTextEditor.selection;
+    const filePath = vscode.window.activeTextEditor.document.fileName;
+    const gitlinkConfig = vscode.workspace.getConfiguration("gitlink");
+
+    const linkMap = await getOnlineLinkAsync(filePath, position);
+    if (linkMap.size === 1) {
+        return linkMap.values().next().value;
+    }
+
+    const defaultRemote = gitlinkConfig["defaultRemote"];
+    if (defaultRemote && linkMap.get(defaultRemote)) {
+        return linkMap.get(defaultRemote);
+    }
+
+    const itemPickList: vscode.QuickPickItem[] = [];
+    for (const [remoteName, _] of linkMap) {
+        itemPickList.push({ label: remoteName, description: "" });
+    }
+
+    const choice = await vscode.window.showQuickPick(itemPickList, {
+        placeHolder: "Select the git remote source"
+    });
+    if (choice === undefined) {
+        // cancel
+        return null;
+    }
+
+    return linkMap.get(choice.label);
+}
+
+async function gotoCommandAsync() {
     try {
-        const linkMap = await getOnlineLinkAsync(vscode.window.activeTextEditor.document.fileName, position);
-        if (linkMap.size === 1) {
-            return vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(linkMap.values().next().value));
+        const gitlink = await getGitLink();
+        if (gitlink) {
+            return vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(gitlink));
         }
-
-        let defaultRemote = gitlinkConfig["defaultRemote"];
-        if (defaultRemote && linkMap.get(defaultRemote)) {
-            return vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(linkMap.get(defaultRemote)));
-        }
-
-        const itemPickList: vscode.QuickPickItem[] = [];
-        for (const [remoteName, url] of linkMap) {
-            itemPickList.push({ label: remoteName, description: "" });
-        }
-
-        let choice = await vscode.window.showQuickPick(itemPickList);
-        if (choice === undefined) {
-            return;
-        }
-
-        return vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(linkMap.get(choice.label)));
     } catch (ex) {
         return vscode.window.showWarningMessage(ex.message);
     }
 }
 
-async function copyCommandAsync(gitlinkConfig: {}) {
-    let position = vscode.window.activeTextEditor.selection;
+async function copyCommandAsync() {
     try {
-        const linkMap = await getOnlineLinkAsync(vscode.window.activeTextEditor.document.fileName, position)
-        if (linkMap.size === 1) {
-            await vscode.env.clipboard.writeText(linkMap.values().next().value);
+        const gitlink = await getGitLink();
+        if (gitlink) {
+            await vscode.env.clipboard.writeText(gitlink);
             return vscode.window.showInformationMessage(`The link has been copied to the clipboard.`);
         }
-
-        let defaultRemote = gitlinkConfig["defaultRemote"];
-        if (defaultRemote && linkMap.get(defaultRemote)) {
-            return vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(linkMap.get(defaultRemote)));
-        }
-
-        const itemPickList: vscode.QuickPickItem[] = [];
-        for (const [remoteName, url] of linkMap) {
-            itemPickList.push({ label: remoteName, description: "" });
-        }
-
-        let choice = await vscode.window.showQuickPick(itemPickList);
-        if (choice === undefined) {
-            return;
-        }
-
-        await vscode.env.clipboard.writeText(linkMap.get(choice.label));
-        return vscode.window.showInformationMessage(`The link of ${choice.label} has been copied to the clipboard.`);
     } catch (ex) {
         return vscode.window.showWarningMessage(ex.message);
     }
