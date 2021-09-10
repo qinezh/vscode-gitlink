@@ -34,11 +34,11 @@
     "commands": [
       {
         "command": "extension.gotoOnlineLink",
-        "title": "Goto Online Link"
+        "title": "GitLink: Goto Online Link"
       },
       {
         "command": "extension.copyOnlineLink",
-        "title": "Copy Online Link"
+        "title": "GitLink: Copy Online Link"
       }
     ],
     "menus": {
