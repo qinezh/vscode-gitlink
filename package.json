@@ -76,6 +76,6 @@
     "@types/vscode": "1.42.0"
   },
   "dependencies": {
-    "git-urls": "^0.4.2"
+    "git-urls": "^0.5.0"
   }
 }
