@@ -1,6 +1,6 @@
 {
   "name": "gitlink",
-  "displayName": "gitlink",
+  "displayName": "GitLink",
   "description": "Goto/Copy current file's online link, supports multiple remote sources in GitHub/GitLab/BitBucket/VSTS/DevOps",
   "version": "0.7.1",
   "publisher": "qezhu",
@@ -57,7 +57,7 @@
     },
     "configuration": {
       "properties": {
-        "gitlink.defaultRemote": {
+        "GitLink.defaultRemote": {
           "type": "string",
           "default": "",
           "description": "The default remote source name used by GitLink extension, while the repo contains multiple remote sources."

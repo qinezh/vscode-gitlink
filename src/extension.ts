@@ -13,14 +13,16 @@ export function activate(context: vscode.ExtensionContext) {
 async function getGitLink(): Promise<string | null> {
     const position = vscode.window.activeTextEditor.selection;
     const filePath = vscode.window.activeTextEditor.document.fileName;
-    const gitlinkConfig = vscode.workspace.getConfiguration("gitlink");
+    const obsoleteGitLinkConfig = vscode.workspace.getConfiguration("gitlink");
+    const gitLinkConfig = vscode.workspace.getConfiguration("GitLink");
+
 
     const linkMap = await getOnlineLinkAsync(filePath, position);
     if (linkMap.size === 1) {
         return linkMap.values().next().value;
     }
 
-    const defaultRemote = gitlinkConfig["defaultRemote"];
+    const defaultRemote = gitLinkConfig["defaultRemote"] || obsoleteGitLinkConfig["defaultRemote"];
     if (defaultRemote && linkMap.get(defaultRemote)) {
         return linkMap.get(defaultRemote);
     }
@@ -43,9 +45,9 @@ async function getGitLink(): Promise<string | null> {
 
 async function gotoCommandAsync() {
     try {
-        const gitlink = await getGitLink();
-        if (gitlink) {
-            return vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(gitlink));
+        const gitLink = await getGitLink();
+        if (gitLink) {
+            return vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(gitLink));
         }
     } catch (ex) {
         return vscode.window.showWarningMessage(ex.message);
@@ -54,9 +56,9 @@ async function gotoCommandAsync() {
 
 async function copyCommandAsync() {
     try {
-        const gitlink = await getGitLink();
-        if (gitlink) {
-            await vscode.env.clipboard.writeText(gitlink);
+        const gitLink = await getGitLink();
+        if (gitLink) {
+            await vscode.env.clipboard.writeText(gitLink);
             return vscode.window.showInformationMessage(`The link has been copied to the clipboard.`);
         }
     } catch (ex) {
