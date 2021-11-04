@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "packages\\vscode-gitlink"
+		},
+		{
+			"path": ".github"
+		}
+	],
+	"settings": {}
+}

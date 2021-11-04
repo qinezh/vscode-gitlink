@@ -1,0 +1,10 @@
+{
+  "name": "gitlink",
+  "private": true,
+  "scripts": {
+    "setup": "npx lerna bootstrap"
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}
