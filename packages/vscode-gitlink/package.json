@@ -71,7 +71,8 @@
     "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
     "esbuild": "npm run esbuild-base -- --sourcemap",
     "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
-    "compile": "tsc -watch -p ./"
+    "compile": "tsc -watch -p ./",
+    "test": "echo 'no tests'"
   },
   "devDependencies": {
     "@types/node": "^6.0.40",
