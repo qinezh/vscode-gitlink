@@ -2,7 +2,7 @@
   "name": "gitlink",
   "private": true,
   "scripts": {
-    "setup": "npx lerna bootstrap"
+    "setup": "npx lerna bootstrap && npx lerna run build"
   },
   "devDependencies": {
     "lerna": "^4.0.0"
