@@ -35,7 +35,7 @@ export default class Helper {
     }
 
     public static getRepoRoot(filePath: string): string | null {
-        let currentFolder = this.normarlize(path.dirname(filePath));
+        let currentFolder = this.normalize(path.dirname(filePath));
         while (true) {
             const configFolder = path.join(currentFolder, ".git");
             if (fs.existsSync(configFolder)) {
@@ -52,7 +52,7 @@ export default class Helper {
         return null;
     }
 
-    public static normarlize(filePath: string): string {
+    public static normalize(filePath: string): string {
         return filePath.replace(/\\/g, '/');
     }
 

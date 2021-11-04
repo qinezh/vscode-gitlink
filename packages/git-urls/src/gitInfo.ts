@@ -6,7 +6,7 @@ export default class GitInfo {
     ref: Ref;
     userName: string;
     hostName?: string;
-    relativefilePath?: string;
+    relativeFilePath?: string;
     section?: Section;
     metadata?: object;
 
@@ -15,7 +15,7 @@ export default class GitInfo {
         this.repoName = repoName;
         this.ref = ref;
         this.userName = userName;
-        this.relativefilePath = relativeFilePath;
+        this.relativeFilePath = relativeFilePath;
         this.section = section;
         this.metadata = metadata;
     }

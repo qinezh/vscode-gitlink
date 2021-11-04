@@ -1,4 +1,3 @@
-import * as fs from "fs-extra";
 import * as path from "path";
 
 import ConfigInfo from "./configInfo";
@@ -17,7 +16,7 @@ export default class GitUrls {
         let urlsMap = new Map<string, string>();
 
         for (let [key, configInfo] of configMap) {
-            configInfo.relativePath = Helper.normarlize(path.relative(repoRoot, filePath));
+            configInfo.relativePath = Helper.normalize(path.relative(repoRoot, filePath));
 
             if (section) {
                 configInfo.section = section;
@@ -41,7 +40,7 @@ export default class GitUrls {
         if (configInfo.relativePath) {
             let parts = configInfo.relativePath.split('/');
             parts = parts.map(p => encodeURIComponent(p));
-            gitInfo.relativefilePath = parts.join('/');
+            gitInfo.relativeFilePath = parts.join('/');
         }
 
         gitInfo.ref = { ...configInfo.ref, value: encodeURIComponent(configInfo.ref.value) };

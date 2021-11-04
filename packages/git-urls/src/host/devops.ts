@@ -25,7 +25,7 @@ export default class DevOps implements Host {
 
     public assemble(info: GitInfo): string {
         const baseUrl = info.repoName.replace(DevOps.urlRegex, "https://dev.azure.com/$1/_git/$2");
-        const path: string = encodeURIComponent(`/${info.relativefilePath}`);
+        const path: string = encodeURIComponent(`/${info.relativeFilePath}`);
 
         let version: string;
         switch (info.ref.type) {

@@ -24,7 +24,7 @@ export default class Vsts implements Host {
 
     public assemble(info: GitInfo): string {
         const baseUrl = info.repoName.replace(Vsts.urlRegex, "https://$1.visualstudio.com/$2/_git/$3");
-        const path: string = encodeURIComponent(`/${info.relativefilePath}`);
+        const path: string = encodeURIComponent(`/${info.relativeFilePath}`);
 
         let version: string;
         switch (info.ref.type) {

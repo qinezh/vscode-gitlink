@@ -10,8 +10,8 @@ export default class BitBucket extends BasicHost {
         const link = this.assembleLink(info);
         
         let fileName: string|null = null;
-        if (info.relativefilePath) {
-            fileName = path.basename(info.relativefilePath);
+        if (info.relativeFilePath) {
+            fileName = path.basename(info.relativeFilePath);
         }
 
         if (info.section && info.section.startLine && info.section.endLine && info.section.startLine !== info.section.endLine && fileName) {
