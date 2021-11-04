@@ -1,0 +1,53 @@
+{
+  "name": "git-urls",
+  "version": "0.5.0",
+  "description": "Get online URL of file(Github, GitLab, Bitbucket...)",
+  "main": "out/src/index.js",
+  "types": "out/src/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qinezh/git-urls.git"
+  },
+  "keywords": [
+    "git"
+  ],
+  "author": "qinezh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/qinezh/git-urls/issues"
+  },
+  "homepage": "https://github.com/qinezh/git-urls#readme",
+  "contributors": [
+    "Junle Li",
+    "Scott Bonebrake",
+    "Tyler Kindy"
+  ],
+  "dependencies": {
+    "fs-extra": "^7.0.1"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^5.1.0",
+    "@types/jest": "^19.2.3",
+    "@types/node": "^7.10.9",
+    "jest": "^27.1.0",
+    "jest-cli": "^27.1.0",
+    "ts-jest": "^27.0.5",
+    "typescript": "^3.7.5"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/preprocessor.js"
+    },
+    "testMatch": [
+      "<rootDir>/test/*.test.ts"
+    ]
+  }
+}
