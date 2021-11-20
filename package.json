@@ -1,85 +1,10 @@
 {
   "name": "gitlink",
-  "displayName": "GitLink",
-  "description": "Goto/Copy current file's online link, supports multiple remote sources in GitHub/GitLab/BitBucket/VSTS/DevOps",
-  "version": "0.8.1",
-  "publisher": "qezhu",
-  "license": "MIT",
-  "author": {
-    "name": "Qinen Zhu",
-    "email": "qezhu@outlook.com"
-  },
-  "icon": "images/logo.png",
-  "bugs": {
-    "url": "https://github.com/qinezh/vscode-gitlink/issues",
-    "email": "qezhu@outlook.com"
-  },
-  "homepage": "https://github.com/qinezh/vscode-gitlink/blob/master/README.md",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/qinezh/vscode-gitlink.git"
-  },
-  "engines": {
-    "vscode": "^1.42.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onCommand:extension.gotoOnlineLink",
-    "onCommand:extension.copyOnlineLink"
-  ],
-  "main": "./out/main.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "extension.gotoOnlineLink",
-        "title": "GitLink: Goto Online Link"
-      },
-      {
-        "command": "extension.copyOnlineLink",
-        "title": "GitLink: Copy Online Link"
-      }
-    ],
-    "menus": {
-      "editor/context": [
-        {
-          "when": "editorTextFocus",
-          "command": "extension.gotoOnlineLink",
-          "group": "GitLink@1"
-        },
-        {
-          "when": "editorTextFocus",
-          "command": "extension.copyOnlineLink",
-          "group": "GitLink@2"
-        }
-      ]
-    },
-    "configuration": {
-      "properties": {
-        "GitLink.defaultRemote": {
-          "type": "string",
-          "default": "",
-          "description": "The default remote source name used by GitLink extension, while the repo contains multiple remote sources."
-        }
-      }
-    }
-  },
+  "private": true,
   "scripts": {
-    "build": "tsc -p ./",
-    "vscode:prepublish": "npm run esbuild-base -- --minify",
-    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
-    "esbuild": "npm run esbuild-base -- --sourcemap",
-    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
-    "compile": "tsc -watch -p ./"
+    "setup": "npx lerna bootstrap && npx lerna run build"
   },
   "devDependencies": {
-    "@types/node": "^6.0.40",
-    "@types/vscode": "1.42.0",
-    "esbuild": "^0.13.12",
-    "typescript": "^2.1.5"
-  },
-  "dependencies": {
-    "git-urls": "^0.5.0"
+    "lerna": "^4.0.0"
   }
 }

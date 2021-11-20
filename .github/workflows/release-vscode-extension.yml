@@ -1,0 +1,36 @@
+name: Publish VS Code Extension to marketplace
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Setup node environment
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: ">=14"
+          registry-url: https://registry.npmjs.org/
+
+      - name: Checkout code 
+        uses: actions/checkout@v2
+      
+      - name: Install
+        run: |
+          npm install
+          npm install -g vsce
+        working-directory: ./packages/vscode-gitlink
+
+      - name: Build
+        run: npm run build
+        working-directory: ./packages/vscode-gitlink
+      
+      - name: Test
+        run: npm run test
+        working-directory: ./packages/vscode-gitlink
+      
+      - name: Publish
+        run: vsce publish -p ${{secrets.VSCODE_TOKEN}}
+        working-directory: ./packages/vscode-gitlink

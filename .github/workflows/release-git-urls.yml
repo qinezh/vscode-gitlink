@@ -1,14 +1,12 @@
-name: Publish NPM Package
+name: Publish Git Urls to npmjs.org
 
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     environment: production
-
     steps:
       - name: Setup node environment
         uses: actions/setup-node@v2.1.2
@@ -21,12 +19,19 @@ jobs:
       
       - name: Install
         run: |
-          npm i
-          npm install -g vsce
+          npm install
+        working-directory: ./packages/git-urls
 
       - name: Build
         run: npm run build
+        working-directory: ./packages/git-urls
+
+      - name: Test
+        run: npm run test
+        working-directory: ./packages/git-urls
       
       - name: Publish
-        run: vsce publish -p ${{secrets.TOKEN}}
-
+        run: npm publish --access public
+        working-directory: ./packages/git-urls
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

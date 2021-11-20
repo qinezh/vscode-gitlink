@@ -12,7 +12,7 @@
             "args": [
                 "--extensionDevelopmentPath=${workspaceRoot}"
             ],
-            "preLaunchTask": "npm: build",
+            "preLaunchTask": "npm: esbuild",
             "stopOnEntry": false,
             "sourceMaps": true,
             "outFiles": [
