@@ -6,6 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: Setup node environment
         uses: actions/setup-node@v2.1.2
@@ -18,14 +19,18 @@ jobs:
       
       - name: Install
         run: |
-          npx lerna bootstrap
-          npm install -g vsce
+          npm install
+        working-directory: ./packages/git-urls
 
       - name: Build
-        run: npx lerna run build
+        run: npm run build
+        working-directory: ./packages/git-urls
+
+      - name: Test
+        run: npm run test
+        working-directory: ./packages/git-urls
       
       - name: Publish
-        environment: production
         run: npm publish --access public
         working-directory: ./packages/git-urls
         env:

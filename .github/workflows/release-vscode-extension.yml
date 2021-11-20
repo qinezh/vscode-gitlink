@@ -6,6 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: Setup node environment
         uses: actions/setup-node@v2.1.2
@@ -18,13 +19,18 @@ jobs:
       
       - name: Install
         run: |
-          npx lerna bootstrap
+          npm install
           npm install -g vsce
+        working-directory: ./packages/vscode-gitlink
 
       - name: Build
-        run: npx lerna run build
+        run: npm run build
+        working-directory: ./packages/vscode-gitlink
+      
+      - name: Test
+        run: npm run test
+        working-directory: ./packages/vscode-gitlink
       
       - name: Publish
-        environment: production
-        run: vsce publish -p ${{secrets.TOKEN}}
+        run: vsce publish -p ${{secrets.VSCODE_TOKEN}}
         working-directory: ./packages/vscode-gitlink
