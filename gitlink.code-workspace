@@ -4,10 +4,16 @@
 			"path": ".github"
 		},
 		{
-			"path": "packages\\vscode-gitlink"
+			"path": "packages/vscode-gitlink"
 		},
 		{
-			"path": "packages\\git-urls"
+			"path": "packages/git-urls"
+		},
+		{
+			"path": "packages/eslint-config"
+		},
+		{
+			"path": "packages/prettier-config"
 		}
 	],
 	"settings": {}

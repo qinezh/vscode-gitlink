@@ -34,8 +34,8 @@ export default class GitUrls {
     }
 
     public static async getUrl(configInfo: GitConfigInfo): Promise<GitUrlResult> {
-        const host = hostBuilder.create(configInfo);
         try {
+            const host = hostBuilder.create(configInfo);
             const gitInfo = host.parse(configInfo);
             const result: GitRemote = {
                 name: configInfo.remoteName,

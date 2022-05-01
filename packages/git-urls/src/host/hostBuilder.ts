@@ -9,7 +9,7 @@ import { GitUrlError } from "../error";
 
 class HostBuilder {
     constructor(readonly hosts: Host[]) {
-        hosts = hosts ?? [new GitHub(), new GitLab(), new BitBucket(), new Vsts(), new DevOps()];
+        this.hosts = hosts.length > 0 ? hosts : [new GitHub(), new GitLab(), new BitBucket(), new Vsts(), new DevOps()];
     }
 
     create(info: GitConfigInfo): Host {

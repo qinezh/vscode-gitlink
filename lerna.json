@@ -1,6 +1,7 @@
 {
     "version": "independent",
     "packages": [
+        "packages/eslint-config",
         "packages/git-urls",
         "packages/vscode-gitlink"
     ]

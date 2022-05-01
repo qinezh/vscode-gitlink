@@ -26,7 +26,6 @@ test("parse invalid config info", async () => {
         ref: { type: "branch", value: "main" },
         relativeFilePath: "test/a.md",
     };
-    const host = hostBuilder.create(configInfo);
 
-    expect(() => host.parse(configInfo)).toThrow(GitUrlError);
+    expect(() => hostBuilder.create(configInfo)).toThrow(GitUrlError);
 });

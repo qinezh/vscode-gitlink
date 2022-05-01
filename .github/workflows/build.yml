@@ -27,14 +27,11 @@ jobs:
       - name: Checkout code 
         uses: actions/checkout@v2
       
-      - name: Install
-        run: npx lerna bootstrap
+      - name: Install & Build
+        run: npm install
 
       - name: Lint
-        run: npx lerna run lint
-
-      - name: Build
-        run: npx lerna run build
+        run: npm run lint
 
       - name: Test
-        run: npx lerna run test
+        run: npm run test

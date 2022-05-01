@@ -26,10 +26,6 @@ jobs:
         run: npm run build
         working-directory: ./packages/git-urls
 
-      - name: Lint
-        run: npm run lint
-        working-directory: ./packages/git-urls
-
       - name: Test
         run: npm run test
         working-directory: ./packages/git-urls
