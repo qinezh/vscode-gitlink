@@ -1,16 +1,18 @@
 import Host from "./host";
-import GitInfo from "../gitInfo";
-import ConfigInfo from "../configInfo";
+import { GitConfigInfo, GitUrlInfo } from "../info";
+import { GitUrlError } from "../error";
 
 export default abstract class BasicHost implements Host {
     private readonly httpRegex = /(https?:\/\/)(?:[^:@]+:[^:@]+@)?([^\/:]+)(?:\/)([^\/:]+)(?:\/)([^\/:\n]+)/;
     private readonly gitRegex = /(git@)([^\/:]+)(?::)([^\/:]+)(?:\/)([^\/:\n]+)/;
-    protected abstract separateFolder;
+    protected abstract get separateFolder(): string | undefined;
 
-    parse(info: ConfigInfo): GitInfo {
-        const matches = this.httpRegex.exec(info.remoteUrl) ?? this.gitRegex.exec(info.remoteUrl);
+    public abstract match(url: string): boolean;
+
+    public parse(configInfo: GitConfigInfo): GitUrlInfo {
+        const matches = this.httpRegex.exec(configInfo.remoteUrl) ?? this.gitRegex.exec(configInfo.remoteUrl);
         if (!matches) {
-            throw new Error(`Can't parse ${info.remoteUrl} with Default rules`);
+            throw new GitUrlError(`Can't parse ${configInfo.remoteUrl} with the rule of ${this.constructor.name}.`);
         }
 
         const schema = matches[1];
@@ -25,25 +27,34 @@ export default abstract class BasicHost implements Host {
         }
 
         let hostName = matches[2];
-        let index = hostName.indexOf('@');
+        const index = hostName.indexOf("@");
         if (index !== -1) {
             hostName = hostName.substring(index + 1);
         }
 
-        return {
+        const gitInfo: GitUrlInfo = {
             hostName: hostName,
             repoName: repoName,
-            ref: info.ref,
+            ref: { ...configInfo.ref, value: encodeURIComponent(configInfo.ref.value) },
             userName: matches[3],
-            metadata: { "isHttp": isHttp },
+            section: configInfo.section,
+            metadata: { isHttp: isHttp },
+        };
+
+        if (configInfo.relativeFilePath) {
+            let parts = configInfo.relativeFilePath.split("/");
+            parts = parts.map(p => encodeURIComponent(p));
+            gitInfo.relativeFilePath = parts.join("/");
         }
+
+        return gitInfo;
     }
 
-    assemble(info: GitInfo): string {
+    public assemble(info: GitUrlInfo): string {
         return this.assembleLink(info);
     }
 
-    assembleLink(info: GitInfo): string {
+    protected assembleLink(info: GitUrlInfo): string {
         let prefix = "https://";
         if (info.metadata && info.metadata["isHttp"]) {
             prefix = "http://";

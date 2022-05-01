@@ -1,13 +1,24 @@
 import BasicHost from "./basicHost";
-import GitInfo from "../gitInfo";
+import { GitUrlInfo } from "../info";
 
 export default class GitLab extends BasicHost {
-    protected separateFolder = "blob";
+    public override match(url: string): boolean {
+        return url.indexOf("gitlab") >= 0;
+    }
 
-    assemble(info: GitInfo): string {
+    protected override get separateFolder(): string | undefined {
+        return "blob";
+    }
+
+    assemble(info: GitUrlInfo): string {
         const link = this.assembleLink(info);
-        
-        if (info.section && info.section.startLine && info.section.endLine && info.section.startLine !== info.section.endLine) {
+
+        if (
+            info.section &&
+            info.section.startLine &&
+            info.section.endLine &&
+            info.section.startLine !== info.section.endLine
+        ) {
             return `${link}#L${info.section.startLine}-${info.section.endLine}`;
         } else if (info.section && info.section.startLine) {
             return `${link}#L${info.section.startLine}`;

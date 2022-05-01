@@ -1,0 +1,6 @@
+{
+  "name": "@shared/eslint-config",
+  "version": "1.0.0",
+  "description": "Shared ESLint config",
+  "private": true
+}

@@ -2,23 +2,26 @@ import Host from "./host";
 import GitHub from "./github";
 import GitLab from "./gitlab";
 import BitBucket from "./bitbucket";
-import Vsts from './vsts';
-import DevOps from './devops';
-import ConfigInfo from "../configInfo";
+import Vsts from "./vsts";
+import DevOps from "./devops";
+import { GitConfigInfo } from "../info";
+import { GitUrlError } from "../error";
 
-export default class HostBuilder {
-    static create(info: ConfigInfo): Host {
+class HostBuilder {
+    constructor(readonly hosts: Host[]) {
+        hosts = hosts ?? [new GitHub(), new GitLab(), new BitBucket(), new Vsts(), new DevOps()];
+    }
+
+    create(info: GitConfigInfo): Host {
         const url = info.remoteUrl;
-        if (url.indexOf("gitlab") >= 0) {
-            return new GitLab();
-        } else if (url.indexOf("bitbucket") >= 0) {
-            return new BitBucket();
-        } else if (Vsts.match(url)) {
-            return new Vsts();
-        } else if (DevOps.match(url)) {
-            return new DevOps();
-        } else {
-            return new GitHub();
+        for (const host of this.hosts) {
+            if (host.match(url)) {
+                return host;
+            }
         }
+
+        throw new GitUrlError(`Can't find a matched platform for the url: ${url}`);
     }
 }
+
+export const hostBuilder = new HostBuilder([]);

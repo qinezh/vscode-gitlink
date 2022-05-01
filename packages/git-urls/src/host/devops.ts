@@ -1,39 +1,52 @@
-import Host from './host';
-import GitInfo from '../gitInfo'
-import ConfigInfo from "../configInfo";
+import { GitConfigInfo, GitUrlInfo } from "../info";
+import BasicHost from "./basicHost";
 
-export default class DevOps implements Host {
+export default class DevOps extends BasicHost {
     /**
      * The regular expression to match the DevOps Git URL.
      * @example https://my-tenant@dev.azure.com/my-org/my-project/_git/my-repo
      * @example https://dev.azure.com/my-org/my-project/_git/my-repo
      * @example my-tenant@ssh.dev.azure.com:22/my-org/my-project/my-repo
      */
-    private static urlRegex: RegExp = /(?:https:\/\/)?(?:[\w-]+@)?(?:ssh.)?dev\.azure\.com(?::[v\d]+)?\/([^\/]+\/[^\/]+)\/(?:_git\/)?([^/]+)/i;
+    private static urlRegex =
+        /(?:https:\/\/)?(?:[\w-]+@)?(?:ssh.)?dev\.azure\.com(?::[v\d]+)?\/([^\/]+\/[^\/]+)\/(?:_git\/)?([^/]+)/i;
 
-    public static match(url: string): boolean {
+    protected override get separateFolder(): string | undefined {
+        return undefined;
+    }
+
+    public override match(url: string): boolean {
         return DevOps.urlRegex.test(url);
     }
 
-    public parse(info: ConfigInfo): GitInfo {
-        return {
-            repoName: info.remoteUrl,
-            ref: info.ref,
-            userName: ''
+    public override parse(configInfo: GitConfigInfo): GitUrlInfo {
+        const gitInfo: GitUrlInfo = {
+            repoName: configInfo.remoteUrl,
+            ref: configInfo.ref,
+            userName: "",
+            section: configInfo.section,
+        };
+
+        if (configInfo.relativeFilePath) {
+            let parts = configInfo.relativeFilePath.split("/");
+            parts = parts.map(p => encodeURIComponent(p));
+            gitInfo.relativeFilePath = parts.join("/");
         }
+
+        return gitInfo;
     }
 
-    public assemble(info: GitInfo): string {
+    public override assemble(info: GitUrlInfo): string {
         const baseUrl = info.repoName.replace(DevOps.urlRegex, "https://dev.azure.com/$1/_git/$2");
         const path: string = encodeURIComponent(`/${info.relativeFilePath}`);
 
         let version: string;
         switch (info.ref.type) {
             case "branch":
-                version = `GB${info.ref.value}`
+                version = `GB${info.ref.value}`;
                 break;
             case "commit":
-                version = `GC${info.ref.value}`
+                version = `GC${info.ref.value}`;
                 break;
         }
 

@@ -1,0 +1,7 @@
+{
+  "name": "@shared/prettier-config",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Shared Prettier config",
+  "main": "index.js"
+}

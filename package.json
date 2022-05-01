@@ -2,7 +2,10 @@
   "name": "gitlink",
   "private": true,
   "scripts": {
-    "setup": "npx lerna bootstrap && npx lerna run build"
+    "postinstall": "npx lerna bootstrap && npx lerna run build",
+    "test": "npx lerna run test",
+    "lint": "npx lerna run lint --stream",
+    "lint:fix": "npx lerna run lint:fix --stream"
   },
   "devDependencies": {
     "lerna": "^4.0.0"

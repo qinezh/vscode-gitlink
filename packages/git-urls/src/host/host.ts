@@ -1,9 +1,9 @@
-import GitInfo from "../gitInfo";
-import ConfigInfo from "../configInfo";
+import { GitConfigInfo, GitUrlInfo } from "../info";
 
 interface Host {
-    parse(info: ConfigInfo): GitInfo;
-    assemble(info: GitInfo): string;
+    match(url: string): boolean;
+    parse(info: GitConfigInfo): GitUrlInfo;
+    assemble(info: GitUrlInfo): string;
 }
 
 export default Host;

@@ -1,38 +1,50 @@
-import Host from './host';
-import GitInfo from '../gitInfo'
-import ConfigInfo from "../configInfo";
+import { GitConfigInfo, GitUrlInfo } from "../info";
+import BasicHost from "./basicHost";
 
-export default class Vsts implements Host {
+export default class Vsts extends BasicHost {
     /**
      * The regular expression to match the VSTS Git URL.
      * @example https://my-tenant.visualstudio.com/DefaultCollection/MyCollection/_git/my-repo
      * @example ssh://my-tenant@my-tenant.visualstudio.com:22/DefaultCollection/MyCollection/_ssh/my-repo
      */
-    private static urlRegex: RegExp = /(?:https:\/\/|ssh:\/\/)([\w-]+)@?.*\.visualstudio\.com(?:\:\d+)?\/(.+)\/(?:_git|_ssh)\/([^/]+)/i;
+    private static urlRegex =
+        /(?:https:\/\/|ssh:\/\/)([\w-]+)@?.*\.visualstudio\.com(?:\:\d+)?\/(.+)\/(?:_git|_ssh)\/([^/]+)/i;
+    protected override get separateFolder(): string | undefined {
+        return undefined;
+    }
 
-    public static match(url: string): boolean {
+    public override match(url: string): boolean {
         return Vsts.urlRegex.test(url);
     }
 
-    public parse(info: ConfigInfo): GitInfo {
-        return {
-            repoName: info.remoteUrl,
-            ref: info.ref,
-            userName: ''
+    public override parse(configInfo: GitConfigInfo): GitUrlInfo {
+        const gitInfo: GitUrlInfo = {
+            repoName: configInfo.remoteUrl,
+            ref: configInfo.ref,
+            userName: "",
+            section: configInfo.section,
+        };
+
+        if (configInfo.relativeFilePath) {
+            let parts = configInfo.relativeFilePath.split("/");
+            parts = parts.map(p => encodeURIComponent(p));
+            gitInfo.relativeFilePath = parts.join("/");
         }
+
+        return gitInfo;
     }
 
-    public assemble(info: GitInfo): string {
+    public override assemble(info: GitUrlInfo): string {
         const baseUrl = info.repoName.replace(Vsts.urlRegex, "https://$1.visualstudio.com/$2/_git/$3");
         const path: string = encodeURIComponent(`/${info.relativeFilePath}`);
 
         let version: string;
         switch (info.ref.type) {
             case "branch":
-                version = `GB${info.ref.value}`
+                version = `GB${info.ref.value}`;
                 break;
             case "commit":
-                version = `GC${info.ref.value}`
+                version = `GC${info.ref.value}`;
                 break;
         }
 

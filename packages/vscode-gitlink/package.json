@@ -2,7 +2,7 @@
   "name": "gitlink",
   "displayName": "GitLink",
   "description": "Goto/Copy current file's online link, supports multiple remote sources in GitHub/GitLab/BitBucket/VSTS/DevOps",
-  "version": "0.8.1",
+  "version": "1.0.0",
   "publisher": "qezhu",
   "license": "MIT",
   "author": {
@@ -72,15 +72,24 @@
     "esbuild": "npm run esbuild-base -- --sourcemap",
     "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
     "compile": "tsc -watch -p ./",
-    "test": "echo 'no tests'"
+    "test": "echo 'no tests'",
+    "lint": "npx eslint \"src/**/*.ts\"",
+    "lint:fix": "npx eslint --fix \"src/**/*.ts\""
   },
   "devDependencies": {
     "@types/node": "^6.0.40",
     "@types/vscode": "1.42.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.13.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-prettier": "^4.0.0",
     "esbuild": "^0.13.12",
-    "typescript": "^2.1.5"
+    "prettier": "^2.6.2",
+    "typescript": "^4.5.0"
   },
   "dependencies": {
-    "git-urls": "^0.5.0"
+    "git-urls": "^1.0.0"
   }
 }
