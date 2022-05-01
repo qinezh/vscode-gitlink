@@ -6,6 +6,3 @@ node_modules/
 src/
 .gitignore
 tsconfig.json
-images/how_to_use_it.gif
-appveyor.yml
-vsc-extension-quickstart.md
