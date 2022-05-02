@@ -2,6 +2,7 @@
 
 import * as vscode from "vscode";
 import GitUrl, { GitUrlResult } from "git-urls";
+import { logger } from "./logger";
 
 export function activate(context: vscode.ExtensionContext) {
     const gotoDisposable = vscode.commands.registerCommand("extension.gotoOnlineLink", gotoCommandAsync);
@@ -17,6 +18,8 @@ async function getGitLink(): Promise<string | null> {
     const gitLinkConfig = vscode.workspace.getConfiguration("GitLink");
 
     const customizedHostType = gitLinkConfig["hostType"];
+    logger.info(`customized host type: ${customizedHostType}`);
+
     const linkMap = await GitUrl.getUrls(
         filePath,
         {
@@ -36,6 +39,8 @@ async function getGitLink(): Promise<string | null> {
 
     // multiple results chosen by default git remote set.
     const defaultRemote = gitLinkConfig["defaultRemote"] || obsoleteGitLinkConfig["defaultRemote"];
+    logger.info(`default remote source: ${defaultRemote}`);
+
     if (defaultRemote && linkMap.get(defaultRemote)) {
         const result = linkMap.get(defaultRemote);
         return await transform(result);
@@ -59,26 +64,43 @@ async function getGitLink(): Promise<string | null> {
     return await transform(result);
 }
 
-async function gotoCommandAsync() {
+async function gotoCommandAsync(): Promise<void> {
+    const gitLink = await getGitLink();
+    let uri: vscode.Uri;
     try {
-        const gitLink = await getGitLink();
-        if (gitLink) {
-            return vscode.commands.executeCommand("vscode.open", vscode.Uri.parse(gitLink));
-        }
+        uri = vscode.Uri.parse(gitLink);
     } catch (ex) {
-        return vscode.window.showErrorMessage(ex.message);
+        const message = `Fail to parse ${gitLink}, error: ${ex.message}`;
+        await vscode.window.showErrorMessage(message);
+        logger.error(message);
+
+        return;
+    }
+
+    try {
+        await vscode.commands.executeCommand("vscode.open", uri);
+        return;
+    } catch (ex) {
+        const message = `Fail to open ${gitLink}, error: ${ex.message}`;
+        await vscode.window.showErrorMessage(message);
+        logger.error(message);
+
+        return;
     }
 }
 
-async function copyCommandAsync() {
+async function copyCommandAsync(): Promise<void> {
+    const gitLink = await getGitLink();
     try {
-        const gitLink = await getGitLink();
-        if (gitLink) {
-            await vscode.env.clipboard.writeText(gitLink);
-            return vscode.window.showInformationMessage(`The link has been copied to the clipboard.`);
-        }
+        await vscode.env.clipboard.writeText(gitLink);
+        await vscode.window.showInformationMessage(`The link has been copied to the clipboard.`);
+        return;
     } catch (ex) {
-        return vscode.window.showErrorMessage(ex.message);
+        const message = `Fail to copy the link ${gitLink}, error: ${ex.message}`;
+        await vscode.window.showErrorMessage(message);
+        logger.error(message);
+
+        return;
     }
 }
 

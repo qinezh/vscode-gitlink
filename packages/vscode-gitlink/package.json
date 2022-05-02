@@ -2,7 +2,7 @@
   "name": "gitlink",
   "displayName": "GitLink",
   "description": "Goto/Copy current file's online link, supports multiple remote sources in GitHub/GitLab/BitBucket/VSTS/DevOps",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "publisher": "qezhu",
   "license": "MIT",
   "author": {
@@ -111,6 +111,6 @@
     "typescript": "^4.6.4"
   },
   "dependencies": {
-    "git-urls": "^2.0.0"
+    "git-urls": "^2.0.1"
   }
 }
