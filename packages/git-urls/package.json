@@ -1,6 +1,6 @@
 {
   "name": "git-urls",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Get online URL of file (Github, GitLab, Bitbucket...)",
   "main": "out/src/index.js",
   "types": "out/src/index.d.ts",

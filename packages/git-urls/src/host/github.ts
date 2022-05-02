@@ -6,6 +6,10 @@ export default class GitHub extends BasicHost {
         return "blob";
     }
 
+    public override get name(): string {
+        return "GitHub";
+    }
+
     public override match(url: string): boolean {
         return url.indexOf("github") >= 0;
     }

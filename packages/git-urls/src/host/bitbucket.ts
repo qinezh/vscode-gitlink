@@ -8,6 +8,10 @@ export default class BitBucket extends BasicHost {
         return "src";
     }
 
+    public override get name(): string {
+        return "BitBucket";
+    }
+
     public override match(url: string): boolean {
         return url.indexOf("bitbucket") >= 0;
     }

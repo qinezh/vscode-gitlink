@@ -13,6 +13,10 @@ export default class Vsts extends BasicHost {
         return undefined;
     }
 
+    public override get name(): string {
+        return "VSTS";
+    }
+
     public override match(url: string): boolean {
         return Vsts.urlRegex.test(url);
     }

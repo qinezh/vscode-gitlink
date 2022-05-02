@@ -7,11 +7,8 @@ export default abstract class BasicHost implements Host {
     private readonly gitRegex = /(git@)([^\/:]+)(?::)(?:\d+\/)?([^\/:]+)(?:\/)([^\/:\n]+)/;
     protected abstract get separateFolder(): string | undefined;
 
+    public abstract get name(): string;
     public abstract match(url: string): boolean;
-
-    public get name(): string {
-        return this.constructor.name;
-    }
 
     public parse(configInfo: GitConfigInfo): GitUrlInfo {
         const matches = this.httpRegex.exec(configInfo.remoteUrl) ?? this.gitRegex.exec(configInfo.remoteUrl);

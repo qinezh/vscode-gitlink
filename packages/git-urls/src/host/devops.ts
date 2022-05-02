@@ -15,6 +15,10 @@ export default class DevOps extends BasicHost {
         return undefined;
     }
 
+    public override get name(): string {
+        return "DevOps";
+    }
+
     public override match(url: string): boolean {
         return DevOps.urlRegex.test(url);
     }

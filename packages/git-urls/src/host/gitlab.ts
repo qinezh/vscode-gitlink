@@ -2,6 +2,10 @@ import BasicHost from "./basicHost";
 import { GitUrlInfo } from "../info";
 
 export default class GitLab extends BasicHost {
+    public override get name(): string {
+        return "GitLab";
+    }
+
     public override match(url: string): boolean {
         return url.indexOf("gitlab") >= 0;
     }
