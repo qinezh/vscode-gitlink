@@ -4,7 +4,7 @@ import { GitUrlError } from "../error";
 
 export default abstract class BasicHost implements Host {
     private readonly httpRegex = /(https?:\/\/)(?:[^:@]+:[^:@]+@)?([^\/:]+)(?:\/)([^\/:]+)(?:\/)([^\/:\n]+)/;
-    private readonly gitRegex = /(git@)([^\/:]+)(?::)([^\/:]+)(?:\/)([^\/:\n]+)/;
+    private readonly gitRegex = /(git@)([^\/:]+)(?::)(?:\d+\/)?([^\/:]+)(?:\/)([^\/:\n]+)/;
     protected abstract get separateFolder(): string | undefined;
 
     public abstract match(url: string): boolean;

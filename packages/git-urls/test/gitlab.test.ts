@@ -81,3 +81,15 @@ test("Get URL with commit SHA in GitLab", async () => {
         "https://gitlab.com/build/git-urls/blob/59f76230dd5829a10aab717265b66c6b5849365e/test/a.md"
     );
 });
+
+test("Get SSH URL with port number in GitLab", async () => {
+    const configInfo: GitConfigInfo = {
+        remoteName,
+        remoteUrl: "git@gitlab.com:1024/qinezh/git-urls",
+        ref: { type: "branch", value: "master" },
+        relativeFilePath: "test/a.md",
+    };
+    const result = await GitUrls.getUrl(configInfo);
+
+    expect(result._unsafeUnwrap().url).toBe("https://gitlab.com/qinezh/git-urls/blob/master/test/a.md");
+});
