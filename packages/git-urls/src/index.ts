@@ -10,7 +10,11 @@ import { err, GitRemote, GitUrlResult, ok } from "./result";
 export { GitUrlResult } from "./result";
 
 export default class GitUrls {
-    public static async getUrls(filePath: string, section?: Section): Promise<Map<string, GitUrlResult>> {
+    public static async getUrls(
+        filePath: string,
+        section?: Section,
+        hostType?: string
+    ): Promise<Map<string, GitUrlResult>> {
         const repoRoot = await Helper.getRepoRoot(filePath);
         if (!repoRoot) {
             throw new GitUrlError(`Can't find repo root for ${filePath}.`);
@@ -26,16 +30,16 @@ export default class GitUrls {
                 configInfo.section = section;
             }
 
-            const result = await this.getUrl(configInfo);
+            const result = await this.getUrl(configInfo, hostType);
             results.set(key, result);
         }
 
         return results;
     }
 
-    public static async getUrl(configInfo: GitConfigInfo): Promise<GitUrlResult> {
+    public static async getUrl(configInfo: GitConfigInfo, hostType?: string): Promise<GitUrlResult> {
         try {
-            const host = hostBuilder.create(configInfo);
+            const host = hostBuilder.create(configInfo, hostType);
             const gitInfo = host.parse(configInfo);
             const result: GitRemote = {
                 name: configInfo.remoteName,

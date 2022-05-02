@@ -61,6 +61,27 @@
           "type": "string",
           "default": "",
           "description": "The default remote source name used by GitLink extension, while the repo contains multiple remote sources."
+        },
+        "GitLink.hostType": {
+          "type": "string",
+          "default": "auto",
+          "enum": [
+            "auto",
+            "github",
+            "gitlab",
+            "bitbucket",
+            "vsts",
+            "devops"
+          ],
+          "enumDescriptions": [
+            "Detect the host type automatically",
+            "Specify the host type to GitHub",
+            "Specify the host type to GitLab",
+            "Specify the host type to BitBucket",
+            "Specify the host type to VSTS",
+            "Specify the host type to DevOps"
+          ],
+          "description": "The host type to match the git url."
         }
       }
     }

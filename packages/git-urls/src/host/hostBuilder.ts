@@ -12,15 +12,23 @@ class HostBuilder {
         this.hosts = hosts.length > 0 ? hosts : [new GitHub(), new GitLab(), new BitBucket(), new Vsts(), new DevOps()];
     }
 
-    create(info: GitConfigInfo): Host {
+    create(info: GitConfigInfo, hostType?: string): Host {
         const url = info.remoteUrl;
+        for (const host of this.hosts) {
+            if (hostType?.toLowerCase() === host.name.toLowerCase()) {
+                return host;
+            }
+        }
+
         for (const host of this.hosts) {
             if (host.match(url)) {
                 return host;
             }
         }
 
-        throw new GitUrlError(`Can't find a matched platform for the url: ${url}`);
+        throw new GitUrlError(
+            `Can't find a matched host type for the url: ${url}. You may be able to specify the host type to match it.`
+        );
     }
 }
 

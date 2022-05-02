@@ -9,6 +9,10 @@ export default abstract class BasicHost implements Host {
 
     public abstract match(url: string): boolean;
 
+    public get name(): string {
+        return this.constructor.name;
+    }
+
     public parse(configInfo: GitConfigInfo): GitUrlInfo {
         const matches = this.httpRegex.exec(configInfo.remoteUrl) ?? this.gitRegex.exec(configInfo.remoteUrl);
         if (!matches) {

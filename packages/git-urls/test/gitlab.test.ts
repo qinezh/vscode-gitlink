@@ -93,3 +93,27 @@ test("Get SSH URL with port number in GitLab", async () => {
 
     expect(result._unsafeUnwrap().url).toBe("https://gitlab.com/qinezh/git-urls/blob/master/test/a.md");
 });
+
+test("Get unsupported SSH URL", async () => {
+    const configInfo: GitConfigInfo = {
+        remoteName,
+        remoteUrl: "git@contoso.com:1024/qinezh/git-urls",
+        ref: { type: "branch", value: "master" },
+        relativeFilePath: "test/a.md",
+    };
+    const result = await GitUrls.getUrl(configInfo);
+
+    expect(result.isErr()).toBe(true);
+});
+
+test("Get unsupported SSH URL with customized host type", async () => {
+    const configInfo: GitConfigInfo = {
+        remoteName,
+        remoteUrl: "git@contoso.com:1024/qinezh/git-urls",
+        ref: { type: "branch", value: "master" },
+        relativeFilePath: "test/a.md",
+    };
+    const result = await GitUrls.getUrl(configInfo, "GitLab");
+
+    expect(result._unsafeUnwrap().url).toBe("https://contoso.com/qinezh/git-urls/blob/master/test/a.md");
+});

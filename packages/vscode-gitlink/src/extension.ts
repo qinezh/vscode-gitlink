@@ -16,12 +16,17 @@ async function getGitLink(): Promise<string | null> {
     const obsoleteGitLinkConfig = vscode.workspace.getConfiguration("gitlink");
     const gitLinkConfig = vscode.workspace.getConfiguration("GitLink");
 
-    const linkMap = await GitUrl.getUrls(filePath, {
-        startLine: position.start.line + 1,
-        endLine: position.end.line + 1,
-        startColumn: position.start.character + 1,
-        endColumn: position.end.character + 1,
-    });
+    const customizedHostType = gitLinkConfig["hostType"];
+    const linkMap = await GitUrl.getUrls(
+        filePath,
+        {
+            startLine: position.start.line + 1,
+            endLine: position.end.line + 1,
+            startColumn: position.start.character + 1,
+            endColumn: position.end.character + 1,
+        },
+        customizedHostType
+    );
 
     // single result.
     if (linkMap.size === 1) {
