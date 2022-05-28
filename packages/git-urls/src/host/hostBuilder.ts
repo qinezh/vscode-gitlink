@@ -5,11 +5,10 @@ import BitBucket from "./bitbucket";
 import Vsts from "./vsts";
 import DevOps from "./devops";
 import { GitConfigInfo } from "../info";
-import { GitUrlError } from "../error";
 
 class HostBuilder {
     constructor(readonly hosts: Host[]) {
-        this.hosts = hosts.length > 0 ? hosts : [new GitHub(), new GitLab(), new BitBucket(), new Vsts(), new DevOps()];
+        this.hosts = hosts.length > 0 ? hosts : [new GitHub(), new GitLab(), new DevOps(), new Vsts(), new BitBucket()];
     }
 
     create(info: GitConfigInfo, hostType?: string): Host {
@@ -26,9 +25,8 @@ class HostBuilder {
             }
         }
 
-        throw new GitUrlError(
-            `Can't find a matched host type for the url: ${url}. You may be able to specify the host type to match it.`
-        );
+        // if no host matched, use GitHub as default
+        return new GitHub();
     }
 }
 

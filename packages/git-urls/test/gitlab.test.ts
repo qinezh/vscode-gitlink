@@ -103,7 +103,7 @@ test("Get unsupported SSH URL", async () => {
     };
     const result = await GitUrls.getUrl(configInfo);
 
-    expect(result.isErr()).toBe(true);
+    expect(result._unsafeUnwrap().url).toBe("https://contoso.com/qinezh/git-urls/blob/master/test/a.md");
 });
 
 test("Get unsupported SSH URL with customized host type", async () => {

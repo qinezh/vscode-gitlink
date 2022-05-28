@@ -39,7 +39,7 @@ async function getGitLink(): Promise<string | null> {
 
     // multiple results chosen by default git remote set.
     const defaultRemote = gitLinkConfig["defaultRemote"] || obsoleteGitLinkConfig["defaultRemote"];
-    logger.info(`default remote source: ${defaultRemote}`);
+    logger.info(`default remote source: ${defaultRemote ?? "not set"}`);
 
     if (defaultRemote && linkMap.get(defaultRemote)) {
         const result = linkMap.get(defaultRemote);
@@ -66,6 +66,10 @@ async function getGitLink(): Promise<string | null> {
 
 async function gotoCommandAsync(): Promise<void> {
     const gitLink = await getGitLink();
+    if (gitLink === null) {
+        return;
+    }
+
     let uri: vscode.Uri;
     try {
         uri = vscode.Uri.parse(gitLink);
@@ -91,6 +95,10 @@ async function gotoCommandAsync(): Promise<void> {
 
 async function copyCommandAsync(): Promise<void> {
     const gitLink = await getGitLink();
+    if (gitLink === null) {
+        return;
+    }
+
     try {
         await vscode.env.clipboard.writeText(gitLink);
         await vscode.window.showInformationMessage(`The link has been copied to the clipboard.`);
