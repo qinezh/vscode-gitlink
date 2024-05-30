@@ -1,13 +1,18 @@
 {
   "name": "gitlink",
   "private": true,
+  "workspaces": [
+    "packages/git-urls",
+    "packages/vscode-gitlink",
+    "packages/eslint-config"
+  ],
   "scripts": {
-    "postinstall": "npx lerna bootstrap && npx lerna run build",
+    "postinstall": "npx lerna run build",
     "test": "npx lerna run test",
     "lint": "npx lerna run lint --stream",
     "lint:fix": "npx lerna run lint:fix --stream"
   },
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "lerna": "^8.1.3"
   }
 }
