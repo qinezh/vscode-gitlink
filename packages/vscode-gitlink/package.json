@@ -93,7 +93,7 @@
     "esbuild": "npm run esbuild-base -- --sourcemap",
     "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
     "compile": "tsc -watch -p ./",
-    "test": "echo 'no tests'",
+    "test": "",
     "lint": "npx eslint \"src/**/*.ts\"",
     "lint:fix": "npx eslint --fix \"src/**/*.ts\""
   },
