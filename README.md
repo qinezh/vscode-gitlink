@@ -1,16 +1,22 @@
-# GitLink (Support GitHub/GitLab/BitBucket/VSTS/DevOps)
+# GitLink
 
-[![Current Version](https://vsmarketplacebadge.apphb.com/version/qezhu.gitlink.svg)](https://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/qezhu.gitlink.svg)](https://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
-[![Rating](https://vsmarketplacebadge.apphb.com/rating/qezhu.gitlink.svg)](https://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
+[![Current Version](https://vsmarketplacebadges.dev/version/qezhu.gitlink.svg)](https://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
+[![Installs](https://vsmarketplacebadges.dev/installs-short/qezhu.gitlink.svg)](https://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
+[![Rating](https://vsmarketplacebadges.dev/rating/qezhu.gitlink.svg)](https://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
 [![AppVeyor](https://img.shields.io/appveyor/ci/qinezh/vscode-gitlink.svg)](https://ci.appveyor.com/project/qinezh/vscode-gitlink)
 
-Inspired by GitHub extension for Visual Studio, this extension provide the feature that **Go To** current file's online link in browser and **Copy** the link in clipboard.
+Inspired by GitHub extension for Visual Studio, this extension provide features that **Go To** current file's online link in browser and **Copy** the link in clipboard.
 
 ## Features
 
 1. Go to the online link of current file.
 2. Copy the online link of current file.
+3. Supported git repo platforms:
+    1. GitHub
+    2. GitLab
+    3. Azure DevOps
+    4. BitBucket
+    5. VSTS
 
 ## Usage
 
