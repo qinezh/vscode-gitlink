@@ -3,8 +3,8 @@ import { GitConfigInfo, GitUrlInfo } from "../info";
 import { GitUrlError } from "../error";
 
 export default abstract class BasicHost implements Host {
-    private readonly httpRegex = /(https?:\/\/)(?:[^:@]+:[^:@]+@)?([^\/:]+)(?:\/)([^\/:]+)(?:\/)([^\/:\n]+)/;
-    private readonly gitRegex = /(git@)([^\/:]+)(?::)(?:\d+\/)?([^\/:]+)(?:\/)([^\/:\n]+)/;
+    private readonly httpRegex = /(https?:\/\/)(?:[^:@]+:[^:@]+@)?([^\/:]+)\/(.*?)([^\/:\n]+)(?:\.git)?$/;
+    private readonly gitRegex = /(git@)([^\/:]+)(?::)(?:\d+\/)?(.*?)([^\/:\n]+)(?:\.git)?$/;
     protected abstract get separateFolder(): string | undefined;
 
     public abstract get name(): string;
@@ -33,11 +33,12 @@ export default abstract class BasicHost implements Host {
             hostName = hostName.substring(index + 1);
         }
 
+        let userName = matches[3].replace(/\/$/, "");
         const gitInfo: GitUrlInfo = {
             hostName: hostName,
             repoName: repoName,
             ref: { ...configInfo.ref, value: encodeURIComponent(configInfo.ref.value) },
-            userName: matches[3],
+            userName: userName,
             section: configInfo.section,
             metadata: { isHttp: isHttp },
         };
