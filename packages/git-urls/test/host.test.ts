@@ -64,3 +64,20 @@ test("parse multi-level path config info", async () => {
     const url = host.assemble(gitInfo);
     expect(url).toEqual("https://gitlab.com/mcmc-group/admin/v2/mlasrv/blob/main/helm/values/kafka.yaml");
 });
+
+test("parse multi-level path config info", async () => {
+    const configInfo: GitConfigInfo = {
+        remoteName: "origin",
+        remoteUrl: "https://gitlab.com/top-level-group/sub-group/actual-project",
+        ref: { type: "branch", value: "main" },
+        relativeFilePath: "package.json",
+    };
+    const host = hostBuilder.create(configInfo);
+
+    const gitInfo = host.parse(configInfo);
+    expect(gitInfo.hostName).toEqual("gitlab.com");
+    expect(gitInfo.repoName).toEqual("actual-project");
+
+    const url = host.assemble(gitInfo);
+    expect(url).toEqual("https://gitlab.com/top-level-group/sub-group/actual-project/blob/main/package.json");
+});
