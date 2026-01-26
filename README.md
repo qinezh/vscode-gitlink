@@ -1,9 +1,8 @@
 # GitLink
 
-[![Current Version](https://vsmarketplacebadges.dev/version/qezhu.gitlink.svg)](https://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
-[![Installs](https://vsmarketplacebadges.dev/installs-short/qezhu.gitlink.svg)](https://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
-[![Rating](https://vsmarketplacebadges.dev/rating/qezhu.gitlink.svg)](https://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
-[![AppVeyor](https://img.shields.io/appveyor/ci/qinezh/vscode-gitlink.svg)](https://ci.appveyor.com/project/qinezh/vscode-gitlink)
+[![Version](https://img.shields.io/visual-studio-marketplace/v/qezhu.gitlink)](https://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/qezhu.gitlink)](https://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
+[![Rating](https://img.shields.io/visual-studio-marketplace/r/qezhu.gitlink)](https://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
 
 Inspired by GitHub extension for Visual Studio, this extension provide features that **Go To** current file's online link in browser and **Copy** the link in clipboard.
 
