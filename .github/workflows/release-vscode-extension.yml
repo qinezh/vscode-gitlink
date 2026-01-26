@@ -21,16 +21,14 @@ jobs:
         run: |
           npm install
           npm install -g vsce
-        working-directory: ./packages/vscode-gitlink
 
       - name: Build
         run: npm run build
-        working-directory: ./packages/vscode-gitlink
       
       - name: Test
         run: npm run test
         working-directory: ./packages/vscode-gitlink
       
       - name: Publish
-        run: vsce publish -p ${{secrets.VSCODE_TOKEN}}
+        run: vsce publish --no-dependencies -p ${{secrets.VSCODE_TOKEN}}
         working-directory: ./packages/vscode-gitlink
