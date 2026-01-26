@@ -33,7 +33,7 @@ export default abstract class BasicHost implements Host {
             hostName = hostName.substring(index + 1);
         }
 
-        let userName = matches[3].replace(/\/$/, "");
+        const userName = matches[3].replace(/\/$/, "");
         const gitInfo: GitUrlInfo = {
             hostName: hostName,
             repoName: repoName,
