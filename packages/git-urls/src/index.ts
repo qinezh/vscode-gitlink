@@ -57,8 +57,9 @@ export default class GitUrls {
     }
 
     private static async parseConfigAsync(repoRoot: string): Promise<Map<string, GitConfigInfo>> {
-        const configPath = path.join(repoRoot, ".git/config");
-        const headPath = path.join(repoRoot, ".git/HEAD");
+        const { gitDir, commonDir } = await Helper.resolveGitDir(repoRoot);
+        const configPath = path.join(commonDir, "config");
+        const headPath = path.join(gitDir, "HEAD");
 
         const existConfig = await fs.pathExists(configPath);
         const existHead = await fs.pathExists(headPath);
