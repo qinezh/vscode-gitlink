@@ -1,9 +1,5 @@
 # GitLink
 
-[![Version](https://img.shields.io/visual-studio-marketplace/v/qezhu.gitlink)](https://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
-[![Installs](https://img.shields.io/visual-studio-marketplace/i/qezhu.gitlink)](https://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
-[![Rating](https://img.shields.io/visual-studio-marketplace/r/qezhu.gitlink)](https://marketplace.visualstudio.com/items?itemName=qezhu.gitlink)
-
 Inspired by GitHub extension for Visual Studio, this extension provide features that **Go To** current file's online link in browser and **Copy** the link in clipboard.
 
 ## Features
